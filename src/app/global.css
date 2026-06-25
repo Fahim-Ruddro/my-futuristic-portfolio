@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #0a0a0c;
+  --foreground: #f3f4f6;
+}
+
+body {
+  color: var(--foreground);
+  background-color: var(--background);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Custom Cyberpunk Scrollbar Utility */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a0c;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1f1f2e;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00f3ff;
+  box-shadow: 0 0 10px #00f3ff;
+}
+
+/* Neon Glow Helper Animations */
+.neon-glow-cyan {
+  text-shadow: 0 0 8px rgba(0, 243, 255, 0.6), 0 0 20px rgba(0, 243, 255, 0.2);
+}
+
+.neon-glow-purple {
+  text-shadow: 0 0 8px rgba(191, 90, 242, 0.6), 0 0 20px rgba(191, 90, 242, 0.2);
+}
+
+.border-neon {
+  box-shadow: 0 0 15px rgba(0, 243, 255, 0.15);
+  border: 1px solid rgba(0, 243, 255, 0.3);
+}
