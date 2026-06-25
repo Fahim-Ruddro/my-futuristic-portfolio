@@ -55,9 +55,15 @@ export default function ProjectsGrid() {
     fetchProjectData();
   }, []);
 
+  // HOW: Filters the array rows down dynamically, normalizing hyphens so database fields don't cause hidden misses
   const filteredProjects = activeFilter === "all" 
     ? projects 
-    : projects.filter(p => p.category === activeFilter);
+    : projects.filter(p => {
+        // Normalize categories like 'real-time' or 'ai-data' down to flat keys like 'realtime' or 'ai'
+        const normalizedProjectCategory = p.category ? p.category.replace("-", "").replace("data", "") : "";
+        const normalizedFilterTab = activeFilter.replace("-", "");
+        return normalizedProjectCategory === normalizedFilterTab;
+      });
 
   return (
     <section id="projects" className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 font-mono">
@@ -68,7 +74,7 @@ export default function ProjectsGrid() {
           <Terminal className="w-4 h-4 animate-pulse" />
           [DEPLOYMENT_LOG] // Core Repositories
         </div>
-        <h2 className="text-2xl font-bold tracking-tight text-white uppercase sm:text-3xl">
+        <h2 className="text-2xl font-bold tracking-tight text-white uppercase sm:text-3xl text-left">
           System Core <span className="text-purple-500">Projects Deck</span>
         </h2>
         <p className="max-w-2xl text-xs text-neutral-400 leading-relaxed font-light text-left">
