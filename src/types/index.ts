@@ -19,7 +19,8 @@ export interface Technology {
   name: string;
   category: "frontend" | "backend" | "database" | "devops" | "aiml";
   proficiencyLevel: number; // Value out of 100
-  metricLabel: string;
+  metricLabel?: string; // WHY: Marked optional so elements without a metric label don't crash compilation!
+  iconName?: string;    // WHY: Formally permitted so TechStack.tsx dataset objects parse seamlessly!
 }
 
 export interface WorkExperience {
