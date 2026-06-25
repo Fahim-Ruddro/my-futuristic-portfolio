@@ -5,7 +5,7 @@ import { Cpu, ExternalLink, Github, Terminal, AlertCircle } from "lucide-react";
 import { Project } from "@/types";
 
 /**
- * WHAT: Full-Stack Project Showcase Grid Deck.
+ * WHAT: Full-Stack Project Showcase Grid Deck (Reconciled Type-Safe Shard).
  * WHY: Connects directly to our backend API to render recruiter-crushing apps fluidly.
  * HOW: Executes a runtime data fetch, handles loading states, and provides dynamic data category filtering.
  */
@@ -15,15 +15,15 @@ export default function ProjectsGrid() {
   const [error, setError] = useState<string | null>(null);
   const [activeFilter, setActiveFilter] = useState<string>("all");
 
-  // Aligned perfectly with our strict database category CHECK constraints
+  // Aligned perfectly with your strict types definition schema categories
   const filterCategories = [
     { id: "all", label: "ALL.SYS" },
-    { id: "real-time", label: "REALTIME" },
+    { id: "realtime", label: "REALTIME" },
     { id: "fintech", label: "FINTECH" },
-    { id: "ai-data", label: "AI_DATA" },
+    { id: "ai", label: "AI_NATIVE" },
     { id: "security", label: "SECURITY" },
-    { id: "devops", label: "DEVOPS" },
-    { id: "automation", label: "AUTOMATION" }
+    { id: "microservices", label: "DISTRIBUTED" },
+    { id: "utilities", label: "UTILITIES" }
   ];
 
   useEffect(() => {
@@ -39,7 +39,7 @@ export default function ProjectsGrid() {
         
         const data = await response.json();
         
-        // Handle structural normalization if the payload arrives as a wrapped object
+        // Handle structural normalization if the payload arrives as an unexpected wrapper object
         const normalizedProjects: Project[] = Array.isArray(data) 
           ? data 
           : (data as any).data || [];
@@ -71,7 +71,7 @@ export default function ProjectsGrid() {
         <h2 className="text-2xl font-bold tracking-tight text-white uppercase sm:text-3xl">
           System Core <span className="text-purple-500">Projects Deck</span>
         </h2>
-        <p className="max-w-2xl text-xs text-neutral-400 leading-relaxed font-light">
+        <p className="max-w-2xl text-xs text-neutral-400 leading-relaxed font-light text-left">
           Click indexing nodes below to traverse isolated full-stack system topologies. Each entry validates advanced data orchestrations.
         </p>
       </div>
@@ -111,16 +111,11 @@ export default function ProjectsGrid() {
       {!loading && !error && (
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {filteredProjects.map((project) => {
-            // Aggregate split stack matrices into a single safe layout list for clean card pills rendering
-            const mergedStackPills = [
-              ...(project.techStack?.frontend || []),
-              ...(project.techStack?.backend || []),
-              ...(project.techStack?.database || []),
-              ...(project.techStack?.devops || [])
-            ].slice(0, 6); // Cap at 6 total elements to protect physical grid space limits
+            // Safely read out the technology array pills mapped straight from types index requirements
+            const displayStackPills = Array.isArray(project.techStack) ? project.techStack.slice(0, 6) : [];
 
-            // Safely fetch the primary key metric node if it exists
-            const primaryMetric = project.metrics && project.metrics.length > 0 ? project.metrics[0] : null;
+            // Read metrics cleanly as an explicit singular object node
+            const cardMetric = project.metrics && project.metrics.label ? project.metrics : null;
 
             return (
               <div
@@ -134,15 +129,15 @@ export default function ProjectsGrid() {
                   {/* CARD METADATA TIMELINE NODE */}
                   <div className="flex items-center justify-between text-[10px] text-neutral-500">
                     <span className="uppercase tracking-widest text-neutral-600">ID: {project.id.slice(0, 8)}</span>
-                    {primaryMetric && (
+                    {cardMetric && (
                       <span className="rounded bg-cyan-950/30 border border-cyan-500/20 px-2 py-0.5 text-cyan-400">
-                        {primaryMetric.label}: {primaryMetric.value}
+                        {cardMetric.label}: {cardMetric.value}
                       </span>
                     )}
                   </div>
 
                   {/* CARD TITLE & TEXT PARAMETERS */}
-                  <div className="space-y-1.5">
+                  <div className="space-y-1.5 text-left">
                     <h3 className="text-sm font-bold text-white transition-colors group-hover:text-cyan-400">
                       {project.title}
                     </h3>
@@ -153,7 +148,7 @@ export default function ProjectsGrid() {
 
                   {/* CARD TECH STACK PILLS CONSOLE */}
                   <div className="flex flex-wrap gap-1.5 pt-2">
-                    {mergedStackPills.map((tech) => (
+                    {displayStackPills.map((tech) => (
                       <span
                         key={tech}
                         className="rounded bg-neutral-900 border border-neutral-800/80 px-2 py-0.5 text-[10px] text-neutral-400 group-hover:border-neutral-800"
